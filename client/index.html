@@ -25,15 +25,15 @@
         <label for="value" class="mr-3">Value</label>
         <input type="text" class="form-control" id="value" v-model="form.value">
       </div>
-      <button class="btn btn-primary" type="submit">Create</button>
+      <button class="btn btn-primary" type="submit" :disabled="!canCreate">Create</button>
     </form>
     <div v-if="contacts.length">
       <div class="card mb-3" v-for="contact in contacts">
         <div class="card-body">
-          <h5 class="card-title">{{contact.name}}</h5>
+          <h5 class="card-title" :style="{color: contact.marked ? 'red' : 'black'}">{{contact.name}}</h5>
           <p class="card-text">{{contact.value}}</p>
-          <button class="btn btn-primary">Cancel</button>
-          <button class="btn btn-danger">Remove</button>
+          <button class="btn btn-primary" @click="markContact(contact.id)" :disabled="contact.marked">Marked</button>
+          <button class="btn btn-danger" @click="removeContact(contact.id)">Remove</button>
         </div>
       </div>
     </div>
