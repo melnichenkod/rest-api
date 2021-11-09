@@ -39,7 +39,8 @@ new Vue({
       const contact = this.contacts.find(item => item.id === id);
       contact.marked = true;
     },
-    removeContact(id){
+    async removeContact(id){
+      await request(`/api/contacts/${id}`, 'DELETE')
       this.contacts = this.contacts.filter(item => item.id !== id)
     }
   },
