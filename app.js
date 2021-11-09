@@ -22,6 +22,12 @@ app.delete('/api/contacts/:id', (req, res) => {
   CONTACTS = CONTACTS.filter(item => item.id !== req.params.id);
   res.status(200).json({message: 'Deleted contact'})
 })
+//PUT
+app.put('/api/contacts/:id', (req, res) => {
+  const idx = CONTACTS.findIndex(item => item.id === req.params.id);
+  CONTACTS[idx] = req.body;
+  res.json(CONTACTS[idx])
+})
 app.use(express.static(path.resolve(__dirname, 'client')));
 
 app.get('*', (req, res) => {
