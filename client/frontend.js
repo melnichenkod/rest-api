@@ -30,5 +30,28 @@ new Vue({
     removeContact(id){
       this.contacts = this.contacts.filter(item => item.id !== id)
     }
+  },
+  async mounted(){
+    const data = await request('/api/contacts')
+    console.log(data);
   }
 })
+
+async function request(url, method = 'GET', date = null){
+  try {
+    const headers ={};
+    let body;
+    if (date) {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(data)
+    }
+    const response = await fetch(url, {
+      method,
+      headers,
+      body
+    })
+    return await response.json()
+  } catch (e) {
+    console.warn('Error', e.message)
+  }
+}
