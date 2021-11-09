@@ -28,10 +28,11 @@ new Vue({
     }
   },
   methods: {
-    createContact(){
+    async createContact(){
       const {...contact} = this.form;
-      //console.log(contact);
-      this.contacts.push({...contact, id: Date.now(), marked: false})
+      const newContact = await request('/api/contacts', 'POST', contact )
+      console.log(newContact);
+      this.contacts.push(newContact)
       this.form.name = this.form.value = ''
     },
     markContact(id){
@@ -50,11 +51,11 @@ new Vue({
   }
 })
 
-async function request(url, method = 'GET', date = null){
+async function request(url, method = 'GET', data = null){
   try {
     const headers ={};
     let body;
-    if (date) {
+    if (data) {
       headers['Content-Type'] = 'application/json';
       body = JSON.stringify(data)
     }
